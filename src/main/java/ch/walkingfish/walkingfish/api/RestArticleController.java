@@ -19,7 +19,7 @@ import ch.walkingfish.walkingfish.model.Article;
 import ch.walkingfish.walkingfish.service.CatalogService;
 
 @RestController
-@RequestMapping("/api/catalogue")
+@RequestMapping("/api/article")
 public class RestArticleController {
     @Autowired
     CatalogService catalogService;
