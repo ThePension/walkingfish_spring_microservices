@@ -35,6 +35,7 @@ public class SecurityConfiguration {
                         "/",
                         "/accueil",
                         "/catalogue/**",
+                        "/api/**",
                         "/articlesImages/**",
                         "/css/**",
                         "/img/**",
