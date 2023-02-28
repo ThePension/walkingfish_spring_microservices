@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 public class Colori {    
     @Id
@@ -19,6 +21,7 @@ public class Colori {
     private String name;
     private String hexa;
 
+    @JsonIgnoreProperties("coloris")
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "coloris")
     private Set<Article> articles;
 

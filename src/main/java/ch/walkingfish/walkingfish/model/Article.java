@@ -21,6 +21,9 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.collection.internal.PersistentList;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class Article {
 
@@ -47,11 +50,13 @@ public class Article {
 
     @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToMany
+    @JsonIgnoreProperties("articles")
     @JoinTable(name = "article_colori", joinColumns = { @JoinColumn(name = "article_id") }, inverseJoinColumns = {
             @JoinColumn(name = "colori_id") })
     private List<Colori> coloris;
 
     @LazyCollection(LazyCollectionOption.FALSE)
+    @JsonIgnoreProperties("article")
     @OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
     private List<Picture> pictures;
 

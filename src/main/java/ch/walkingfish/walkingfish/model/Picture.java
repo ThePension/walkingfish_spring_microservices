@@ -9,6 +9,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 public class Picture {
     @Id
@@ -19,6 +22,7 @@ public class Picture {
     private String name;
 
     @ManyToOne
+    @JsonIgnoreProperties("pictures")
     @JoinColumn(name = "article_id")
     private Article article;
 
