@@ -14,6 +14,7 @@ import ch.walkingfish.walkingfish.model.*;
 
 import ch.walkingfish.walkingfish.repository.ArticleRepository;
 import ch.walkingfish.walkingfish.service.CatalogService;
+import ch.walkingfish.walkingfish.service.PictureService;
 
 @SpringBootTest
 public class CatalogueServiceTests {
@@ -23,6 +24,9 @@ public class CatalogueServiceTests {
 
   @Autowired
   ArticleRepository articleRepository;
+
+  @Autowired
+  PictureService pictureService;
 
   @Test
   void testInjectedComponentsAreNotNull(){
@@ -131,12 +135,12 @@ public class CatalogueServiceTests {
       Picture picture = new Picture("some/url/to/picture/", "Desert.jpg", article);
 
       // Insert picture in database
-      picture = catalogService.savePicture(picture);
+      picture = pictureService.savePicture(picture);
 
       // Get picture from database
       Picture result = null;
       try {
-        result = catalogService.getPictureById(picture.getId());
+        result = pictureService.getPictureById(picture.getId());
       } catch (Exception e) {
         // TODO Auto-generated catch block
         e.printStackTrace();
@@ -147,7 +151,7 @@ public class CatalogueServiceTests {
       assertThat(result).isEqualTo(picture);
 
       try {
-        catalogService.deletePictureInDB(picture.getId());
+        pictureService.deletePictureInDB(picture.getId());
         catalogService.deleteArticleInDB(article.getId());
       } catch (Exception e) {
         // TODO Auto-generated catch block

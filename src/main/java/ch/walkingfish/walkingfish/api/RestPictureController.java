@@ -12,17 +12,18 @@ import ch.walkingfish.walkingfish.model.Colori;
 import ch.walkingfish.walkingfish.model.Picture;
 import ch.walkingfish.walkingfish.service.CatalogService;
 import ch.walkingfish.walkingfish.service.ColoriService;
+import ch.walkingfish.walkingfish.service.PictureService;
 
 @RestController
 @RequestMapping("/api/picture")
 public class RestPictureController {
     @Autowired
-    CatalogService catalogService;
+    PictureService pictureService;
     
     @GetMapping("/{article_id}")
     public Picture getColoriByArticleId(@PathVariable int article_id) {
         try {
-            return catalogService.getPictureById((long) article_id);
+            return pictureService.getPictureById((long) article_id);
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

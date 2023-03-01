@@ -11,6 +11,7 @@ import ch.walkingfish.walkingfish.model.Colori;
 import ch.walkingfish.walkingfish.model.Picture;
 import ch.walkingfish.walkingfish.service.CatalogService;
 import ch.walkingfish.walkingfish.service.ColoriService;
+import ch.walkingfish.walkingfish.service.PictureService;
 
 @Component
 public class CatalogSeeder implements CommandLineRunner {
@@ -20,6 +21,9 @@ public class CatalogSeeder implements CommandLineRunner {
 
     @Autowired
     private ColoriService coloriService;
+
+    @Autowired
+    private PictureService pictureService;
 
     @Override
     public void run(String... args) throws Exception {
@@ -38,7 +42,7 @@ public class CatalogSeeder implements CommandLineRunner {
      */
     private void cleanDatabase() {
         // Delete all pictures
-        catalogService.deleteAllPictures();
+        pictureService.deleteAllPictures();
 
         // Delete all articles
         catalogService.deleteAllArticles();
@@ -99,11 +103,11 @@ public class CatalogSeeder implements CommandLineRunner {
             Picture picture6 = new Picture("/articlesImages/bonnet_vert6.png", "bonnet_vert6.png", article);
 
             // Save the pictures
-            catalogService.savePicture(picture2);
-            catalogService.savePicture(picture3);
-            catalogService.savePicture(picture4);
-            catalogService.savePicture(picture5);
-            catalogService.savePicture(picture6);
+            pictureService.savePicture(picture2);
+            pictureService.savePicture(picture3);
+            pictureService.savePicture(picture4);
+            pictureService.savePicture(picture5);
+            pictureService.savePicture(picture6);
         }
 
         // Create an list of sizes for the article
@@ -139,11 +143,11 @@ public class CatalogSeeder implements CommandLineRunner {
             Picture picture5 = new Picture("/articlesImages/tshirt_rouge5.png", "tshirt_rouge5.png", article);
 
             // Save the pictures
-            catalogService.savePicture(picture1);
-            catalogService.savePicture(picture2);
-            catalogService.savePicture(picture3);
-            catalogService.savePicture(picture4);
-            catalogService.savePicture(picture5);
+            pictureService.savePicture(picture1);
+            pictureService.savePicture(picture2);
+            pictureService.savePicture(picture3);
+            pictureService.savePicture(picture4);
+            pictureService.savePicture(picture5);
         }
     }
 }

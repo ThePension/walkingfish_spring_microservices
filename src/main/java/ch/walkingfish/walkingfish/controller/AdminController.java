@@ -22,6 +22,7 @@ import ch.walkingfish.walkingfish.model.Picture;
 import ch.walkingfish.walkingfish.service.CatalogService;
 import ch.walkingfish.walkingfish.service.ColoriService;
 import ch.walkingfish.walkingfish.service.FileStorageService;
+import ch.walkingfish.walkingfish.service.PictureService;
 
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -42,6 +43,9 @@ public class AdminController {
 
     @Autowired
     ColoriService coloriService;
+
+    @Autowired
+    PictureService pictureService;
 
     /**
      * Show the catalogue
@@ -129,7 +133,7 @@ public class AdminController {
                     // Save the picture to the database
                     Picture picture = new Picture("/articlesImages/" + imageName, imageName, article);
 
-                    catalogService.savePicture(picture);
+                    pictureService.savePicture(picture);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -228,7 +232,7 @@ public class AdminController {
 
         // Get the picture from the database
         try {
-            picture = catalogService.getPictureById(picture_id.longValue());
+            picture = pictureService.getPictureById(picture_id.longValue());
         } catch (Exception e) {
             model.addAttribute("errors", "Une erreur est survenue lors de la suppression de l'image");
             e.printStackTrace();
@@ -237,7 +241,7 @@ public class AdminController {
 
         // Delete the picture from the database
         try {
-            catalogService.deletePictureInDB(picture_id.longValue());
+            pictureService.deletePictureInDB(picture_id.longValue());
         } catch (Exception e) {
             model.addAttribute("errors", "Une erreur est survenue lors de la suppression de l'image");
             e.printStackTrace();
@@ -280,7 +284,7 @@ public class AdminController {
                 // Save the picture to the database
                 Picture picture = new Picture("/articlesImages/" + imageName, imageName, article);
 
-                catalogService.savePicture(picture);
+                pictureService.savePicture(picture);
             } catch (IOException e) {
                 e.printStackTrace();
             }
