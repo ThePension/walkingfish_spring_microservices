@@ -23,14 +23,17 @@ import ch.walkingfish.walkingfish.service.CatalogService;
 public class RestArticleController {
     @Autowired
     CatalogService catalogService;
-    
+
     @GetMapping(value = { "/", "" })
     public List<Article> showCatalogue(@RequestParam("search") Optional<String> opt_search) {
         List<Article> articles = null;
 
         if (opt_search.isPresent()) {
             String search = opt_search.get();
-            articles = catalogService.getAllArticlesFromCatalog().stream().filter(article -> article.getDescription().contains(search) || article.getName().contains(search)).collect(Collectors.toList());
+            articles = catalogService.getAllArticlesFromCatalog()//
+                    .stream()//
+                    .filter(article -> article.getDescription().contains(search) || article.getName().contains(search))//
+                    .collect(Collectors.toList());
         } else {
             articles = catalogService.getAllArticlesFromCatalog();
         }
