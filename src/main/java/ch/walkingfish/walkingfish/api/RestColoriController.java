@@ -31,4 +31,10 @@ public class RestColoriController {
                 .stream()//
                 .collect(Collectors.toList());
     }
+
+    @GetMapping("/{id}")
+    public Colori getColoriById(@PathVariable int id)
+    {
+        return coloriService.getColoriById(id);
+    }
 }
