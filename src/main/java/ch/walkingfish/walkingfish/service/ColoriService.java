@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ch.walkingfish.walkingfish.repository.ArticleRepository;
 import ch.walkingfish.walkingfish.repository.ColoriRepository;
 import ch.walkingfish.walkingfish.model.Colori;
 
@@ -14,9 +13,6 @@ import ch.walkingfish.walkingfish.model.Colori;
 public class ColoriService {
     @Autowired
     private ColoriRepository coloriRepository;
-
-    @Autowired
-    private ArticleRepository articleRepository;
 
     /**
      * Return all the colori

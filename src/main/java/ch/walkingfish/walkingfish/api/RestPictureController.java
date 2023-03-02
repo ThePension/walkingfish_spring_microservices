@@ -9,10 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ch.walkingfish.walkingfish.model.Article;
-import ch.walkingfish.walkingfish.model.Colori;
 import ch.walkingfish.walkingfish.model.Picture;
-import ch.walkingfish.walkingfish.service.CatalogService;
-import ch.walkingfish.walkingfish.service.ColoriService;
 import ch.walkingfish.walkingfish.service.PictureService;
 
 @RestController
@@ -20,9 +17,15 @@ import ch.walkingfish.walkingfish.service.PictureService;
 public class RestPictureController {
     @Autowired
     PictureService pictureService;
-    
+
+    @GetMapping(value = {"/", ""})
+    public List<Picture> getAllPictures()
+    {
+        return pictureService.getAllPictures();
+    }
+
     @GetMapping("/{id}")
-    public Picture getColoriByArticleId(@PathVariable int id) {
+    public Picture getPictureByArticleId(@PathVariable int id) {
         try {
             return pictureService.getPictureById((long) id);
         } catch (Exception e) {
@@ -31,7 +34,7 @@ public class RestPictureController {
         }
     }
 
-    @GetMapping("/{picture_id}")
+    @GetMapping("/{picture_id}/articles")
     public Article getArticleFromPicture(@PathVariable int picture_id)
     {
         try {

@@ -1,5 +1,7 @@
 package ch.walkingfish.walkingfish.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,4 +77,12 @@ public class PictureService {
 			}
 		});
 	}
+
+    public List<Picture> getAllPictures()
+    {
+        List<Picture> result = new ArrayList<Picture>();
+		pictureRepository.findAll().forEach(result::add);
+
+        return result;
+    }
 }
