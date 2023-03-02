@@ -5,11 +5,14 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ch.walkingfish.walkingfish.model.Article;
+import ch.walkingfish.walkingfish.model.Colori;
+import ch.walkingfish.walkingfish.model.Picture;
 import ch.walkingfish.walkingfish.service.CatalogService;
 
 @RestController
@@ -33,5 +36,38 @@ public class RestArticleController {
         }
 
         return articles;
+    }
+
+    @GetMapping("/{id}")
+    public Article getArticleById(@PathVariable int id)
+    {
+        try {
+            return catalogService.getArticleById((long) id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @GetMapping("/{id}/pictures")
+    public List<Picture> getPicturesFromArticle(@PathVariable int id)
+    {
+        try {
+            return catalogService.getArticleById((long)id).getPictures();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @GetMapping("/{id}/coloris")
+    public List<Colori> getColorisFromArticle(@PathVariable int id)
+    {
+        try {
+            return catalogService.getArticleById((long)id).getColoris();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
