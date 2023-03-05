@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -102,6 +103,16 @@ public class RestArticleController {
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    @DeleteMapping(value = { "/{id}", "/{id}/" })
+    public void deleteArticle(@PathVariable int id)
+    {
+        try {
+            catalogService.deleteArticleInDB((long)id);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
