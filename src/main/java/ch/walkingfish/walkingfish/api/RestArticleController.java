@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -78,6 +79,26 @@ public class RestArticleController {
     {
         try {
             return catalogService.addArticleToCatalog(article);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @PutMapping(value = { "/{id}", "/{id}/" })
+    public Article updateArticle(@PathVariable int id, @RequestBody Article article)
+    {
+        // Check if the article exists
+        try {
+            catalogService.getArticleById((long) id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        // Update the article
+        try {
+            return catalogService.updateArticleInDB(article);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
