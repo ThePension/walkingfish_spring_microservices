@@ -6,6 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -24,6 +25,9 @@ import org.springframework.web.filter.OncePerRequestFilter;
 @Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+    @Value("${walkingfish.app.secret_key}")
+    private String secret_key;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
@@ -41,7 +45,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return new InMemoryUserDetailsManager(
                 User.builder()
                         .username("admin")
-                        .password(passwordEncoder().encode("mot-de-passe-unique"))
+                        .password(passwordEncoder().encode(secret_key))
                         .roles("ADMIN")
                         .build());
     }
@@ -54,21 +58,5 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService()).passwordEncoder(passwordEncoder());
-    }
-
-    @Bean
-    public OncePerRequestFilter authenticationFilter() {
-        return new OncePerRequestFilter() {
-            @Override
-            protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
-                    FilterChain filterChain) throws ServletException, IOException {
-                String password = request.getHeader("X-Password");
-                if ("mot-de-passe-unique".equals(password)) {
-                    filterChain.doFilter(request, response);
-                } else {
-                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Authentication failed");
-                }
-            }
-        };
     }
 }
