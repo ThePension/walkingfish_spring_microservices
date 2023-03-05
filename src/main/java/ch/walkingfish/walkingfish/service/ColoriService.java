@@ -41,8 +41,8 @@ public class ColoriService {
      * 
      * @param colori the colori to add
      */
-    public void addColori(Colori colori) {
-        coloriRepository.save(colori);
+    public Colori addColori(Colori colori) {
+        return coloriRepository.save(colori);
     }
 
     /**

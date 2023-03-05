@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 public class Colori {    
@@ -18,7 +19,9 @@ public class Colori {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @JsonProperty("name")
     private String name;
+    @JsonProperty("hexa")
     private String hexa;
 
     @JsonIgnoreProperties("coloris")
