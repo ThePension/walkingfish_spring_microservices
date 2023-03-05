@@ -16,6 +16,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Entity
 public class Colori {    
     @Id
+    @JsonProperty("id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 

@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ch.walkingfish.walkingfish.repository.ColoriRepository;
 import ch.walkingfish.walkingfish.model.Colori;
@@ -42,7 +43,7 @@ public class ColoriService {
      * @param colori the colori to add
      */
     public Colori addColori(Colori colori) {
-        return coloriRepository.save(colori);
+        return coloriRepository.saveAndFlush(colori);
     }
 
     /**
@@ -50,8 +51,8 @@ public class ColoriService {
      * 
      * @param colori the colori to update
      */
-    public void updateColori(Colori colori) {
-        coloriRepository.save(colori);
+    public Colori updateColori(Colori colori) {
+        return coloriRepository.save(colori);
     }
 
     /**

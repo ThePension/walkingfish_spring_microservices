@@ -8,4 +8,5 @@ public interface ColoriRepository extends CrudRepository<Colori, Long> {
     public Colori findById(long id);
     public Colori findByName(String name);
     public Colori findByHexa(String hexa);
+    public Colori saveAndFlush(Colori colori);
 }

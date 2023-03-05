@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -45,5 +46,24 @@ public class RestColoriController {
     public Colori createColori(@RequestBody Colori colori)
     {
         return coloriService.addColori(colori);
+    }
+
+    @PutMapping(value = {"/{id}", ""}, consumes = { "multipart/form-data", "application/json" })
+    public Colori updateColori(@PathVariable int id, @RequestBody Colori colori)
+    {
+        System.out.println("id: " + id);
+        // Check if the id is the same as the id in the object
+        if (id != colori.getId()) {
+            // TODO : Return custom error
+            return null;
+        }
+
+        // Check if the colori exists
+        if (coloriService.getColoriById(id) == null) {
+            // TODO : Return custom error
+            return null;
+        }
+
+        return coloriService.updateColori(colori);
     }
 }
