@@ -1,31 +1,18 @@
 package ch.walkingfish.walkingfish.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import ch.walkingfish.walkingfish.repository.ColoriRepository;
 import ch.walkingfish.walkingfish.model.Colori;
 
-@Service
-public class ColoriService {
-    @Autowired
-    private ColoriRepository coloriRepository;
+
+public interface ColoriService {
 
     /**
      * Return all the colori
      * 
      * @return the list of colori
      */
-    public List<Colori> getAllColori() {
-        List<Colori> result = new ArrayList<Colori>();
-        coloriRepository.findAll().forEach(result::add);
-
-        return result;
-    }
+    public List<Colori> getAllColori();
 
     /**
      * Return the colori by the id
@@ -33,35 +20,27 @@ public class ColoriService {
      * @param id the id of the colori
      * @return the colori
      */
-    public Colori getColoriById(long id) {
-        return coloriRepository.findById(id);
-    }
+    public Colori getColoriById(long id);
 
     /**
      * Add a new colori
      * 
      * @param colori the colori to add
      */
-    public Colori addColori(Colori colori) {
-        return coloriRepository.saveAndFlush(colori);
-    }
+    public Colori addColori(Colori colori);
 
     /**
      * Update the colori
      * 
      * @param colori the colori to update
      */
-    public Colori updateColori(Colori colori) {
-        return coloriRepository.save(colori);
-    }
+    public Colori updateColori(Colori colori);
 
     /**
      * Delete the colori by the id
      * @param id the id of the colori
      */
-    public void deleteColori(long id) {
-        coloriRepository.deleteById(id);
-    }
+    public void deleteColori(long id);
 
     /**
      * Return the colori by the name
@@ -69,9 +48,7 @@ public class ColoriService {
      * @param name the name of the colori
      * @return the colori
      */
-    public Colori getColoriByName(String name) {
-        return coloriRepository.findByName(name);
-    }
+    public Colori getColoriByName(String name);
 
     /**
      * Return the colori by the hexa code
@@ -79,14 +56,10 @@ public class ColoriService {
      * @param hexa the hexa code
      * @return the colori
      */
-    public Colori getColoriByHexa(String hexa) {
-        return coloriRepository.findByHexa(hexa);
-    }
+    public Colori getColoriByHexa(String hexa);
 
     /**
      * Delete all the colori
      */
-    public void deleteAllColori() {
-        coloriRepository.deleteAll();
-    }
+    public void deleteAllColori();
 }
