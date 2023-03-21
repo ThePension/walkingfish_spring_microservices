@@ -29,6 +29,11 @@ public class RestColoriController {
         return coloriService.getAllColori();
     }
 
+    @GetMapping(value = { ".xml/", ".xml" })
+    public List<Colori> getAllColorisXml() {
+        return coloriService.getAllColori();
+    }
+
     @GetMapping("/{colori_id}/articles")
     public List<Article> getAllArticlesBasedOnColori(@PathVariable int colori_id) {
         return coloriService.getColoriById(colori_id) //
