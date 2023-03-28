@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,10 +23,14 @@ import ch.walkingfish.walkingfish.model.Picture;
 import ch.walkingfish.walkingfish.service.CatalogService;
 import ch.walkingfish.walkingfish.service.FileStorageService;
 import ch.walkingfish.walkingfish.service.PictureService;
+import ch.walkingfish.walkingfish.service.ProducerService;
 
 @RestController
 @RequestMapping("/api/article")
 public class RestArticleController {
+    @Autowired
+    private ProducerService producerService;
+    
     @Autowired
     private CatalogService catalogService;
 
@@ -49,18 +54,25 @@ public class RestArticleController {
             articles = catalogService.getAllArticlesFromCatalog();
         }
 
+        producerService.send(articles);
+
         return articles;
     }
 
     @GetMapping("/{id}")
     public Article getArticleById(@PathVariable int id)
     {
+        Article article = null;
         try {
-            return catalogService.getArticleById((long) id);
+            article = catalogService.getArticleById((long) id);
+            
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
+        
+        producerService.send(article);
+        return article;
     }
 
     @GetMapping("/{id}/pictures")

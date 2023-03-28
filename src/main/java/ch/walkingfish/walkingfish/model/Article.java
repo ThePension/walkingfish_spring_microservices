@@ -2,6 +2,7 @@ package ch.walkingfish.walkingfish.model;
 
 import java.util.List;
 import java.util.Objects;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.persistence.CascadeType;
@@ -25,7 +26,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-public class Article {
+public class Article implements Serializable {
 
     public static final ArrayList<String> SIZES = new ArrayList<String>() {
         {

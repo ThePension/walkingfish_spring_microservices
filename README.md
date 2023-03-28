@@ -1,11 +1,34 @@
 # walkingfish_spring
 
-### How to build and run the app
+## Configuration
+
+### MySQL with Docker
+Install mysql image and run the container :
+
+```bash
+docker run --name mysql -p3306:3306 -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql
+```
+
+Then, in the `application-mysql.properties` file, adapt the following fields :
 
 ```
-./mvnw clean install
-./mvnw package # Useful ?
+spring.datasource.username=root
+spring.datasource.password=my-secret-password
+```
 
+### ActiveMQ with Docker
+
+Run the latest ActiveMQ container :
+
+```bash
+docker pull rmohr/activemq
+docker run -p 61616:61616 -p 8161:8161 rmohr/activemq
+```
+
+### How to build and run the app
+
+```bash
+./mvnw clean install
 ./mvnw spring-boot:run
 
 # or
