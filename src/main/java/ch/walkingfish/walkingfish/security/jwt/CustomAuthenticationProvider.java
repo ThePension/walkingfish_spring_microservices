@@ -23,18 +23,12 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
  
         String name = authentication.getName();
         String password = authentication.getCredentials().toString();
-
-        System.out.println("Received Name : " + name);
-        System.out.println("Received Password : " + password);
-
-        System.out.println("Real Name : " + wk_username);
-        System.out.println("Real Password : " + wk_password);
         
         if (name.equals(wk_username) && password.equals(wk_password)) {
-            System.out.println("Correct password");
             return new UsernamePasswordAuthenticationToken(name, password, new ArrayList<>());
         }
 
+        // TODO : return error response, invalid credentials
         return null;
     }
 
