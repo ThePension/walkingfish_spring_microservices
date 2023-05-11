@@ -1,10 +1,8 @@
-package ch.walkingfish.walkingfish.model;
+package ch.walkingfish.walkingfish.model.log;
 
 import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-// import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class SimpleLog implements Serializable {
     private String text;
