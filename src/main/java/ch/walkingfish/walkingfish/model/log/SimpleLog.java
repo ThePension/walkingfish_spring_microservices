@@ -57,10 +57,6 @@ public class SimpleLog implements Serializable {
 
     @Override
     public String toString() {
-        return "{" +
-                " action='" + getAction() + "'" +
-                ", timestamp='" + getTimestamp() + "'" +
-                ", type='" + getType() + "'" +
-                "}";
+        return getTimestamp() + " [" + getType().getLabel() + "] " + getAction() + " : " + getMessage();
     }
 }

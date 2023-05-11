@@ -6,13 +6,13 @@ public enum LogType {
     WARNING("WARNING"),
     ERROR("ERROR");
 
-    private String type;
+    private String label;
 
-    LogType(String type) {
-        this.type = type;
+    LogType(String label) {
+        this.label = label;
     }
 
-    public String getType() {
-        return this.type;
+    public String getLabel() {
+        return this.label;
     }
 }
