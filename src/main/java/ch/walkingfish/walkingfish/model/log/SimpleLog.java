@@ -5,46 +5,62 @@ import java.io.Serializable;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class SimpleLog implements Serializable {
-    private String text;
-    // private String timestamp;
-
-    // public SimpleLog(
-    //         @JsonProperty("message") String message,
-    //         @JsonProperty("timestamp") String timestamp) {
-    //     this.message = message;
-    //     this.timestamp = timestamp;
-    // }
+    private String action;
+    private String timestamp;
+    private LogType type;
+    private String message;
 
     public SimpleLog(
-        @JsonProperty("text") String text) {
+            @JsonProperty("type") LogType type,
+            @JsonProperty("action") String action,
+            @JsonProperty("message") String message) {
 
-        this.text = text;
-        
+        this.action = action;
+        this.type = type;
+        this.message = message;
+
         // Now
-        // this.timestamp = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date());
+        this.timestamp = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date());
     }
 
-    public String getText() {
-        return this.text;
+    public String getAction() {
+        return this.action;
     }
 
-    // public String getTimestamp() {
-    //     return this.timestamp;
-    // }
-
-    public void setText(String text) {
-        this.text = text;
+    public String getTimestamp() {
+        return this.timestamp;
     }
 
-    // public void setTimestamp(String timestamp) {
-    //     this.timestamp = timestamp;
-    // }
+    public LogType getType() {
+        return this.type;
+    }
+
+    public String getMessage() {
+        return this.message;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public void setType(LogType type) {
+        this.type = type;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
     @Override
     public String toString() {
         return "{" +
-            " text='" + getText() + "'" +
-            // ", timestamp='" + getTimestamp() + "'" +
-            "}";
+                " action='" + getAction() + "'" +
+                ", timestamp='" + getTimestamp() + "'" +
+                ", type='" + getType() + "'" +
+                "}";
     }
 }

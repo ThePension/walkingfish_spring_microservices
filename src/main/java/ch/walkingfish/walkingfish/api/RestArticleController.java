@@ -20,7 +20,8 @@ import org.springframework.web.multipart.MultipartFile;
 import ch.walkingfish.walkingfish.model.Article;
 import ch.walkingfish.walkingfish.model.Colori;
 import ch.walkingfish.walkingfish.model.Picture;
-import ch.walkingfish.walkingfish.model.SimpleLog;
+import ch.walkingfish.walkingfish.model.log.LogType;
+import ch.walkingfish.walkingfish.model.log.SimpleLog;
 import ch.walkingfish.walkingfish.service.CatalogService;
 import ch.walkingfish.walkingfish.service.FileStorageService;
 import ch.walkingfish.walkingfish.service.PictureService;
@@ -55,7 +56,7 @@ public class RestArticleController {
             articles = catalogService.getAllArticlesFromCatalog();
         }
 
-        SimpleLog log = new SimpleLog("GET /api/article");
+        SimpleLog log = new SimpleLog(LogType.INFO, "GET /api/article", "Récupération de tous les articles du catalogue");
 
         producerService.send(log);
 
@@ -68,9 +69,18 @@ public class RestArticleController {
         Article article = null;
         try {
             article = catalogService.getArticleById((long) id);
+
+            SimpleLog log = new SimpleLog(LogType.INFO, "GET /api/article/" + id, "Récupération de l'article " + article.getName());
+
+            producerService.send(log);
             
         } catch (Exception e) {
             e.printStackTrace();
+
+            SimpleLog log = new SimpleLog(LogType.ERROR, "GET /api/article/" + id, e.getMessage());
+
+            producerService.send(log);
+
             return null;
         }
         
@@ -82,9 +92,20 @@ public class RestArticleController {
     public List<Picture> getPicturesFromArticle(@PathVariable int id)
     {
         try {
-            return catalogService.getArticleById((long)id).getPictures();
+            List<Picture> pictures = catalogService.getArticleById((long)id).getPictures();
+
+            SimpleLog log = new SimpleLog(LogType.INFO, "GET /api/article/" + id + "/pictures", "Récupération des images de l'article " + id);
+
+            producerService.send(log);
+
+            return pictures;
         } catch (Exception e) {
             e.printStackTrace();
+
+            SimpleLog log = new SimpleLog(LogType.ERROR, "GET /api/article/" + id + "/pictures", e.getMessage());
+
+            producerService.send(log);
+
             return null;
         }
     }
@@ -93,9 +114,20 @@ public class RestArticleController {
     public List<Colori> getColorisFromArticle(@PathVariable int id)
     {
         try {
-            return catalogService.getArticleById((long)id).getColoris();
+            List<Colori> coloris = catalogService.getArticleById((long)id).getColoris();
+
+            SimpleLog log = new SimpleLog(LogType.INFO, "GET /api/article/" + id + "/coloris", "Récupération des coloris de l'article " + id);
+
+            producerService.send(log);
+
+            return coloris;
         } catch (Exception e) {
             e.printStackTrace();
+
+            SimpleLog log = new SimpleLog(LogType.ERROR, "GET /api/article/" + id + "/coloris", e.getMessage());
+
+            producerService.send(log);
+
             return null;
         }
     }
@@ -104,9 +136,20 @@ public class RestArticleController {
     public Article createArticle(@RequestBody Article article)
     {
         try {
-            return catalogService.addArticleToCatalog(article);
+            Article added_article = catalogService.addArticleToCatalog(article);
+
+            SimpleLog log = new SimpleLog(LogType.INFO, "POST /api/article", "Création de l'article " + article.getName());
+
+            producerService.send(log);
+
+            return added_article;
         } catch (Exception e) {
             e.printStackTrace();
+
+            SimpleLog log = new SimpleLog(LogType.ERROR, "POST /api/article", e.getMessage());
+
+            producerService.send(log);
+
             return null;
         }
     }
@@ -119,14 +162,31 @@ public class RestArticleController {
             catalogService.getArticleById((long) id);
         } catch (Exception e) {
             e.printStackTrace();
+
+            SimpleLog log = new SimpleLog(LogType.ERROR, "PUT /api/article/" + id, e.getMessage());
+
+            producerService.send(log);
+
             return null;
         }
 
         // Update the article
         try {
-            return catalogService.updateArticleInDB(article);
+            Article updated_article =  catalogService.updateArticleInDB(article);
+
+            SimpleLog log = new SimpleLog(LogType.INFO, "PUT /api/article/" + id, "Mise à jour de l'article " + article.getName());
+
+            producerService.send(log);
+
+            return updated_article;
+
         } catch (Exception e) {
             e.printStackTrace();
+
+            SimpleLog log = new SimpleLog(LogType.ERROR, "PUT /api/article/" + id, e.getMessage());
+
+            producerService.send(log);
+
             return null;
         }
     }
@@ -136,8 +196,17 @@ public class RestArticleController {
     {
         try {
             catalogService.deleteArticleInDB((long)id);
+
+            SimpleLog log = new SimpleLog(LogType.INFO, "DELETE /api/article/" + id, "Suppression de l'article " + id);
+
+            producerService.send(log);
+
         } catch (Exception e) {
             e.printStackTrace();
+
+            SimpleLog log = new SimpleLog(LogType.ERROR, "DELETE /api/article/" + id, e.getMessage());
+
+            producerService.send(log);
         }
     }
 
@@ -149,8 +218,17 @@ public class RestArticleController {
 
         try {
             article = catalogService.getArticleById((long) id);
+
+            SimpleLog log = new SimpleLog(LogType.INFO, "POST /api/article/" + id + "/pictures", "Ajout d'une image à l'article " + id);
+
+            producerService.send(log);
         } catch (Exception e) {
             e.printStackTrace();
+
+            SimpleLog log = new SimpleLog(LogType.ERROR, "POST /api/article/" + id + "/pictures", e.getMessage());
+
+            producerService.send(log);
+
             return null;
         }
 
@@ -162,9 +240,18 @@ public class RestArticleController {
             // Save the picture to the database
             Picture picture = new Picture("/articlesImages/" + imageName, imageName, article);
 
+            SimpleLog log = new SimpleLog(LogType.INFO, "POST /api/article/" + id + "/pictures", "Ajout d'une image à l'article " + id);
+
+            producerService.send(log);
+
             return pictureService.savePicture(picture);
         } catch (IOException e) {
             e.printStackTrace();
+
+            SimpleLog log = new SimpleLog(LogType.ERROR, "POST /api/article/" + id + "/pictures", e.getMessage());
+
+            producerService.send(log);
+            
             return null;
         }
     }
