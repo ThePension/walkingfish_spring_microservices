@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ch.walkingfish.walkingfish.model.Article;
 import ch.walkingfish.walkingfish.model.Picture;
+import ch.walkingfish.walkingfish.model.log.LogType;
+import ch.walkingfish.walkingfish.model.log.SimpleLog;
 import ch.walkingfish.walkingfish.service.FileStorageService;
 import ch.walkingfish.walkingfish.service.PictureService;
+import ch.walkingfish.walkingfish.service.ProducerService;
 
 @RestController
 @RequestMapping("/api/picture")
@@ -24,18 +27,36 @@ public class RestPictureController {
     @Autowired
     private FileStorageService fileStorageService;
 
+    @Autowired
+    private ProducerService producerService;
+
     @GetMapping(value = {"/", ""})
     public List<Picture> getAllPictures()
     {
+        SimpleLog log = new SimpleLog(LogType.INFO, "GET /api/picture", "Récupération de toutes les images");
+
+        producerService.send(log); 
+
         return pictureService.getAllPictures();
     }
 
     @GetMapping("/{id}")
     public Picture getPictureByArticleId(@PathVariable int id) {
         try {
-            return pictureService.getPictureById((long) id);
+            Picture picture = pictureService.getPictureById((long) id);
+
+            SimpleLog log = new SimpleLog(LogType.INFO, "GET /api/picture/" + id, "Récupération de l'image " + id);
+
+            producerService.send(log);
+
+            return picture;
         } catch (Exception e) {
             e.printStackTrace();
+
+            SimpleLog log = new SimpleLog(LogType.ERROR, "GET /api/picture/" + id, "Erreur lors de la récupération de l'image " + id);
+
+            producerService.send(log);
+
             return null;
         }
     }
@@ -44,9 +65,21 @@ public class RestPictureController {
     public Article getArticleFromPicture(@PathVariable int picture_id)
     {
         try {
-            return pictureService.getPictureById((long) picture_id).getArticle();
+            Article article = pictureService.getPictureById((long) picture_id).getArticle();
+
+            SimpleLog log = new SimpleLog(LogType.INFO, "GET /api/picture/" + picture_id + "/articles", "Récupération de l'article de l'image " + picture_id);
+
+            producerService.send(log);
+
+            return article;
+
         } catch (Exception e) {
             e.printStackTrace();
+
+            SimpleLog log = new SimpleLog(LogType.ERROR, "GET /api/picture/" + picture_id + "/articles", "Erreur lors de la récupération de l'article de l'image " + picture_id);
+
+            producerService.send(log);
+
             return null;
         }
     }
@@ -58,24 +91,52 @@ public class RestPictureController {
         // Get the picture from the database
         try {
             picture = pictureService.getPictureById((long) id);
+
+            SimpleLog log = new SimpleLog(LogType.INFO, "DELETE /api/picture/" + id, "Suppression de l'image " + id);
+
+            producerService.send(log);
+
         } catch (Exception e) {
             e.printStackTrace();
+
+            SimpleLog log = new SimpleLog(LogType.ERROR, "DELETE /api/picture/" + id, "Erreur lors de la suppression de l'image " + id);
+
+            producerService.send(log);
+
             return;
         }
 
         // Delete the picture from the database
         try {
             pictureService.deletePictureInDB((long) id);
+
+            SimpleLog log = new SimpleLog(LogType.INFO, "DELETE /api/picture/" + id, "Suppression de l'image " + id + " dans la base de données");
+
+            producerService.send(log);
         } catch (Exception e) {
             e.printStackTrace();
+
+            SimpleLog log = new SimpleLog(LogType.ERROR, "DELETE /api/picture/" + id, "Erreur lors de la suppression de l'image " + id + " dans la base de données");
+
+            producerService.send(log);
+
             return;
         }
 
         // Delete the picture from the server
         try {
             fileStorageService.delete(picture.getName());
+
+            SimpleLog log = new SimpleLog(LogType.INFO, "DELETE /api/picture/" + id, "Suppression de l'image " + id + " sur le serveur");
+
+            producerService.send(log);
         } catch (IOException e) {
             e.printStackTrace();
+
+            SimpleLog log = new SimpleLog(LogType.ERROR, "DELETE /api/picture/" + id, "Erreur lors de la suppression de l'image " + id + " sur le serveur");
+
+            producerService.send(log);
+
             return;
         }
     }
