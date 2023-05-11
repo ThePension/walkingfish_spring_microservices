@@ -1,11 +1,13 @@
-package ch.walkingfish.walkingfish.consumer.tools;
+package ch.walkingfish.walkingfish.model;
 
 import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+// import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class SimpleLog implements Serializable {
-    private String message;
+    private String text;
     // private String timestamp;
 
     // public SimpleLog(
@@ -15,25 +17,25 @@ public class SimpleLog implements Serializable {
     //     this.timestamp = timestamp;
     // }
 
-    // public SimpleLog(
-    //     @JsonProperty("message") String message) {
+    public SimpleLog(
+        @JsonProperty("text") String text) {
 
-    //     this.message = message;
+        this.text = text;
         
-    //     // Now
-    //     this.timestamp = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date());
-    // }
+        // Now
+        // this.timestamp = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date());
+    }
 
-    public String getMessage() {
-        return this.message;
+    public String getText() {
+        return this.text;
     }
 
     // public String getTimestamp() {
     //     return this.timestamp;
     // }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setText(String text) {
+        this.text = text;
     }
 
     // public void setTimestamp(String timestamp) {
@@ -43,7 +45,7 @@ public class SimpleLog implements Serializable {
     @Override
     public String toString() {
         return "{" +
-            " message='" + getMessage() + "'" +
+            " text='" + getText() + "'" +
             // ", timestamp='" + getTimestamp() + "'" +
             "}";
     }

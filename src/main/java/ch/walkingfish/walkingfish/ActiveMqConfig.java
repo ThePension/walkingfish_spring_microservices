@@ -23,7 +23,6 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
-import ch.walkingfish.walkingfish.consumer.tools.ArticleDeserializer;
 import ch.walkingfish.walkingfish.model.Article;
 
 @Configuration

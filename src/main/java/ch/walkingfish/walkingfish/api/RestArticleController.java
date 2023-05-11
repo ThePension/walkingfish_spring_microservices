@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import ch.walkingfish.walkingfish.consumer.tools.SimpleLog;
 import ch.walkingfish.walkingfish.model.Article;
 import ch.walkingfish.walkingfish.model.Colori;
 import ch.walkingfish.walkingfish.model.Picture;
+import ch.walkingfish.walkingfish.model.SimpleLog;
 import ch.walkingfish.walkingfish.service.CatalogService;
 import ch.walkingfish.walkingfish.service.FileStorageService;
 import ch.walkingfish.walkingfish.service.PictureService;
@@ -55,9 +55,7 @@ public class RestArticleController {
             articles = catalogService.getAllArticlesFromCatalog();
         }
 
-        SimpleLog log = new SimpleLog();
-
-        log.setMessage("GET /api/article");
+        SimpleLog log = new SimpleLog("GET /api/article");
 
         producerService.send(log);
 

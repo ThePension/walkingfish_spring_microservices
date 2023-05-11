@@ -26,9 +26,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-import ch.walkingfish.walkingfish.consumer.tools.ArticleDeserializer;
-
-@JsonDeserialize(using = ArticleDeserializer.class)
 @Entity
 public class Article implements Serializable {
 
