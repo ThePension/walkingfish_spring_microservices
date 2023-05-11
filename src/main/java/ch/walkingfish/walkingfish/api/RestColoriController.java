@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ch.walkingfish.walkingfish.model.Article;
 import ch.walkingfish.walkingfish.model.Colori;
+import ch.walkingfish.walkingfish.model.log.LogType;
+import ch.walkingfish.walkingfish.model.log.SimpleLog;
 import ch.walkingfish.walkingfish.service.ColoriService;
+import ch.walkingfish.walkingfish.service.ProducerService;
 
 @RestController
 @RequestMapping("/api/colori")
@@ -24,18 +27,34 @@ public class RestColoriController {
     @Autowired
     ColoriService coloriService;
 
+    @Autowired
+    private ProducerService producerService;
+
     @GetMapping(value = { "/", "" })
     public List<Colori> getAllColoris() {
+        SimpleLog log = new SimpleLog(LogType.INFO, "GET /api/colori", "Récupération de tous les coloris");
+
+        producerService.send(log);
+
         return coloriService.getAllColori();
     }
 
     @GetMapping(value = { ".xml/", ".xml" })
     public List<Colori> getAllColorisXml() {
+        SimpleLog log = new SimpleLog(LogType.INFO, "GET /api/colori.xml", "Récupération de tous les coloris");
+
+        producerService.send(log);
+
         return coloriService.getAllColori();
     }
 
     @GetMapping("/{colori_id}/articles")
     public List<Article> getAllArticlesBasedOnColori(@PathVariable int colori_id) {
+        SimpleLog log = new SimpleLog(LogType.INFO, "GET /api/colori/" + colori_id + "/articles",
+                "Récupération de tous les articles basés sur le colori " + colori_id);
+
+        producerService.send(log);
+
         return coloriService.getColoriById(colori_id) //
                 .getArticles()//
                 .stream()//
@@ -45,12 +64,20 @@ public class RestColoriController {
     @GetMapping("/{id}")
     public Colori getColoriById(@PathVariable int id)
     {
+        SimpleLog log = new SimpleLog(LogType.INFO, "GET /api/colori/" + id, "Récupération du colori " + id);
+
+        producerService.send(log);
+
         return coloriService.getColoriById(id);
     }
 
     @PostMapping(value = {"/", ""}, consumes = { "multipart/form-data", "application/json" })
     public Colori createColori(@RequestBody Colori colori)
     {
+        SimpleLog log = new SimpleLog(LogType.INFO, "POST /api/colori", "Création d'un colori");
+
+        producerService.send(log);
+
         return coloriService.addColori(colori);
     }
 
@@ -60,15 +87,25 @@ public class RestColoriController {
         System.out.println("id: " + id);
         // Check if the id is the same as the id in the object
         if (id != colori.getId()) {
-            // TODO : Return custom error
+            SimpleLog log = new SimpleLog(LogType.ERROR, "PUT /api/colori/" + id, "L'id du colori ne correspond pas à l'id dans le body");
+
+            producerService.send(log);
+
             return null;
         }
 
         // Check if the colori exists
         if (coloriService.getColoriById(id) == null) {
-            // TODO : Return custom error
+            SimpleLog log = new SimpleLog(LogType.ERROR, "PUT /api/colori/" + id, "Le colori n'existe pas");
+
+            producerService.send(log);
+
             return null;
         }
+
+        SimpleLog log = new SimpleLog(LogType.INFO, "PUT /api/colori/" + id, "Modification du colori " + id);
+
+        producerService.send(log);
 
         return coloriService.updateColori(colori);
     }
@@ -76,6 +113,10 @@ public class RestColoriController {
     @DeleteMapping("/{id}")
     public void deleteColori(@PathVariable int id)
     {
+        SimpleLog log = new SimpleLog(LogType.INFO, "DELETE /api/colori/" + id, "Suppression du colori " + id);
+
+        producerService.send(log);
+
         coloriService.deleteColori(id);
     }
 }
