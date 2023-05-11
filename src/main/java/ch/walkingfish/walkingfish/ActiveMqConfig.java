@@ -20,10 +20,7 @@ import org.springframework.jms.support.destination.DynamicDestinationResolver;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-
-import ch.walkingfish.walkingfish.model.Article;
 
 @Configuration
 @EnableJms
@@ -81,7 +78,6 @@ public class ActiveMqConfig {
         MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
         converter.setTargetType(MessageType.TEXT);
         converter.setObjectMapper(objectMapper());
-        // converter.setTypeIdPropertyName("_type");
         return converter;
     }
 
@@ -97,20 +93,6 @@ public class ActiveMqConfig {
 		mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 		return mapper;
     }
-
-
-    // @Bean
-    // public ObjectMapper objectMapper() {
-    //     ObjectMapper objectMapper = new ObjectMapper();
-    //     objectMapper.registerModule(new JavaTimeModule());
-    //     objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
-
-    //     SimpleModule module = new SimpleModule();
-    //     module.addDeserializer(Article.class, new ArticleDeserializer());
-    //     objectMapper.registerModule(module);
-
-    //     return objectMapper;
-    // }
 
     /***
      * Composant de gestion des messages jms
