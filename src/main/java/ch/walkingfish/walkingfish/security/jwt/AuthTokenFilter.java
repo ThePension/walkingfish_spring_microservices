@@ -22,6 +22,12 @@ public class AuthTokenFilter extends OncePerRequestFilter {
   
     private static final Logger logger = LoggerFactory.getLogger(AuthTokenFilter.class);
   
+    /**
+     * Filter the request to check if the user is authenticated
+     * @param request the request
+     * @param response the response
+     * @param filterChain the filter chain
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
         throws ServletException, IOException {

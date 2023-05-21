@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,6 +29,10 @@ public class RestColoriController {
     @Autowired
     private ProducerService producerService;
 
+    /**
+     * Get all coloris
+     * @return a list of coloris
+     */
     @GetMapping(value = { "/", "" })
     public List<Colori> getAllColoris() {
         SimpleLog log = new SimpleLog(LogType.INFO, "GET /api/colori", "Récupération de tous les coloris");
@@ -39,6 +42,10 @@ public class RestColoriController {
         return coloriService.getAllColori();
     }
 
+    /**
+     * Get all coloris in XML
+     * @return a list of coloris
+     */
     @GetMapping(value = { ".xml/", ".xml" })
     public List<Colori> getAllColorisXml() {
         SimpleLog log = new SimpleLog(LogType.INFO, "GET /api/colori.xml", "Récupération de tous les coloris");
@@ -48,6 +55,11 @@ public class RestColoriController {
         return coloriService.getAllColori();
     }
 
+    /**
+     * Get all articles based on a colori
+     * @param colori_id the id of the colori
+     * @return a list of articles
+     */
     @GetMapping("/{colori_id}/articles")
     public List<Article> getAllArticlesBasedOnColori(@PathVariable int colori_id) {
         SimpleLog log = new SimpleLog(LogType.INFO, "GET /api/colori/" + colori_id + "/articles",
@@ -61,6 +73,11 @@ public class RestColoriController {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Get a colori by id
+     * @param id the id of the colori
+     * @return the colori
+     */
     @GetMapping("/{id}")
     public Colori getColoriById(@PathVariable int id)
     {
@@ -71,6 +88,11 @@ public class RestColoriController {
         return coloriService.getColoriById(id);
     }
 
+    /**
+     * Create a colori
+     * @param colori the colori to create
+     * @return the created colori
+     */
     @PostMapping(value = {"/", ""}, consumes = { "multipart/form-data", "application/json" })
     public Colori createColori(@RequestBody Colori colori)
     {
@@ -81,6 +103,12 @@ public class RestColoriController {
         return coloriService.addColori(colori);
     }
 
+    /**
+     * Update a colori
+     * @param id the id of the colori
+     * @param colori the colori to update
+     * @return the updated colori
+     */
     @PutMapping(value = {"/{id}", ""}, consumes = { "multipart/form-data", "application/json" })
     public Colori updateColori(@PathVariable int id, @RequestBody Colori colori)
     {
@@ -110,6 +138,10 @@ public class RestColoriController {
         return coloriService.updateColori(colori);
     }
 
+    /**
+     * Delete a colori
+     * @param id the id of the colori
+     */
     @DeleteMapping("/{id}")
     public void deleteColori(@PathVariable int id)
     {

@@ -1,7 +1,6 @@
 package ch.walkingfish.walkingfish.model;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,7 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -35,8 +33,9 @@ public class Picture implements Serializable {
 
     /**
      * Constructor
-     * @param url url of the picture
-     * @param name name of the picture
+     * 
+     * @param url     url of the picture
+     * @param name    name of the picture
      * @param article the article
      */
     public Picture(String url, String name, Article article) {
@@ -47,6 +46,7 @@ public class Picture implements Serializable {
 
     /**
      * Get the article
+     * 
      * @return the article
      */
     public Article getArticle() {
@@ -55,6 +55,7 @@ public class Picture implements Serializable {
 
     /**
      * Set the article
+     * 
      * @param article the article
      */
     public void setArticle(Article article) {
@@ -63,6 +64,7 @@ public class Picture implements Serializable {
 
     /**
      * Get the id
+     * 
      * @return the id
      */
     public Long getId() {
@@ -71,6 +73,7 @@ public class Picture implements Serializable {
 
     /**
      * Set the id
+     * 
      * @param id the id
      */
     public void setId(Long id) {
@@ -79,6 +82,7 @@ public class Picture implements Serializable {
 
     /**
      * Get the url
+     * 
      * @return the url
      */
     public String getUrl() {
@@ -87,6 +91,7 @@ public class Picture implements Serializable {
 
     /**
      * Set the url
+     * 
      * @param url the url
      */
     public void setUrl(String url) {
@@ -95,6 +100,7 @@ public class Picture implements Serializable {
 
     /**
      * Get the name
+     * 
      * @return the name
      */
     public String getName() {
@@ -103,12 +109,18 @@ public class Picture implements Serializable {
 
     /**
      * Set the name
+     * 
      * @param name the name
      */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * toString method
+     * 
+     * @return the string
+     */
     @Override
     public String toString() {
         return "Picture[article_id : " + this.article.getId() + "|this_id : " + this.id + "|this_url : " + this.url
@@ -116,11 +128,22 @@ public class Picture implements Serializable {
                 + "]";
     }
 
+    /**
+     * hashCode method
+     * 
+     * @return the hashcode
+     */
     @Override
     public int hashCode() {
         return (id != null ? id.hashCode() : 0);
     }
 
+    /**
+     * equals method
+     * 
+     * @param obj the object to compare
+     * @return true if equals, false otherwise
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -134,8 +157,7 @@ public class Picture implements Serializable {
 
         Picture other = (Picture) obj;
 
-        if (this.id != null)
-        {
+        if (this.id != null) {
             if (other.id == null)
                 return false;
             else if (!this.id.equals(other.id))

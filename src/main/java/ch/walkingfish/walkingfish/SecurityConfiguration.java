@@ -1,6 +1,5 @@
 package ch.walkingfish.walkingfish;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,11 +27,23 @@ public class SecurityConfiguration {
   @Autowired
   private AuthEntryPointJwt unauthorizedHandler;
 
+  /**
+   * Create a new AuthTokenFilter
+   * 
+   * @return the AuthTokenFilter
+   */
   @Bean
   public AuthTokenFilter authenticationJwtTokenFilter() {
     return new AuthTokenFilter();
   }
 
+  /**
+   * Create a new AuthenticationManager
+   * 
+   * @param http the HttpSecurity
+   * @return the AuthenticationManager
+   * @throws Exception if an error occurs
+   */
   @Bean
   public AuthenticationManager authManager(HttpSecurity http) throws Exception {
     AuthenticationManagerBuilder authenticationManagerBuilder = http
@@ -41,11 +52,23 @@ public class SecurityConfiguration {
     return authenticationManagerBuilder.build();
   }
 
+  /**
+   * Create a new PasswordEncoder
+   * 
+   * @return the PasswordEncoder
+   */
   @Bean
   public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
   }
 
+  /**
+   * Create a new SecurityFilterChain
+   * 
+   * @param http the HttpSecurity
+   * @return the SecurityFilterChain
+   * @throws Exception if an error occurs
+   */
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http.cors().and().csrf().disable()

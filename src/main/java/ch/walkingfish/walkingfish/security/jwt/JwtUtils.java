@@ -27,10 +27,20 @@ public class JwtUtils {
   @Value("${walkingfish.app.jwtCookieName}")
   private String jwtCookie;
 
+  /**
+   * Get the username from the JWT token
+   * @param token the JWT token
+   * @return the username
+   */
   public String getUserNameFromJwtToken(String token) {
     return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
   }
 
+  /**
+   * Validate the JWT token
+   * @param authToken the JWT token
+   * @return true if the token is valid, false otherwise
+   */
   public boolean validateJwtToken(String authToken) {
     try {
       Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
@@ -50,6 +60,11 @@ public class JwtUtils {
     return false;
   }
   
+  /**
+   * Generate a JWT token from the username
+   * @param username the username
+   * @return the JWT token as a string
+   */
   public String generateTokenFromUsername(String username) {
     return Jwts.builder()
         .setSubject(username)

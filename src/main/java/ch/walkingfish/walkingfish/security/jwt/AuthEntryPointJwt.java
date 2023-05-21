@@ -18,6 +18,12 @@ public class AuthEntryPointJwt implements AuthenticationEntryPoint {
 
   private static final Logger logger = LoggerFactory.getLogger(AuthEntryPointJwt.class);
 
+  /**
+   * Send an error message if the user is not authenticated
+   * @param request the request
+   * @param response the response
+   * @param authException the authentication exception
+   */
   @Override
   public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException)
       throws IOException, ServletException {

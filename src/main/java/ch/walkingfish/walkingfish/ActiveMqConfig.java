@@ -34,12 +34,12 @@ public class ActiveMqConfig {
     @Value("${spring.activemq.password}")
     private String password;
 
-
     /**
-     * Template de gestion des messages
-     * @param connectionFactory 
-     * @param configurer le configurer
-     * @return une instance de JmsListenerContainerFactory
+     * Set up a factory for JMS listeners
+     * 
+     * @param connectionFactory the connection factory
+     * @param configurer        the configurer
+     * @return the factory
      */
     @Bean
     public JmsListenerContainerFactory<?> jmsFactory(ConnectionFactory connectionFactory,
@@ -54,9 +54,9 @@ public class ActiveMqConfig {
     }
 
     /**
-     * Composant de gestion de la connection jms
+     * Set up a connection factory
      * 
-     * @return une instance de ConnectionFactory
+     * @return the connection factory
      */
     @Bean
     public ConnectionFactory connectionFactory() {
@@ -69,11 +69,10 @@ public class ActiveMqConfig {
     }
 
     /**
-     * Composant de gestion des messages jms
+     * Set up a message converter
      * 
-     * @return une instance de MessageConverter
+     * @return the message converter
      */
-    // @Bean
     public MessageConverter messageConverter() {
         MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
         converter.setTargetType(MessageType.TEXT);
@@ -82,22 +81,22 @@ public class ActiveMqConfig {
     }
 
     /**
-     * Instance de mapper pour désérialiser les messages json en Article
+     * Set up an object mapper
      * 
-     * @return une instance de objectMapper
+     * @return the object mapper
      */
     @Bean
     public ObjectMapper objectMapper() {
         ObjectMapper mapper = new ObjectMapper();
-		mapper.registerModule(new JavaTimeModule());
-		mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-		return mapper;
+        mapper.registerModule(new JavaTimeModule());
+        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        return mapper;
     }
 
-    /***
-     * Composant de gestion des messages jms
+    /**
+     * Set up a JMS template
      * 
-     * @return une instance de JmsTemplate
+     * @return the JMS template
      */
     @Bean
     public JmsTemplate jmsTemplate() {
@@ -111,9 +110,9 @@ public class ActiveMqConfig {
     }
 
     /**
-     * Composant de gestion des routes jms
+     * Set up a destination resolver
      * 
-     * @return une instance de DynamicDestinationResolver
+     * @return the destination resolver
      */
     @Bean
     DynamicDestinationResolver destinationResolver() {

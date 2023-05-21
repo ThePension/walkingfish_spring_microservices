@@ -1,8 +1,6 @@
 package ch.walkingfish.walkingfish.service;
 
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import org.springframework.web.multipart.MultipartFile;
 

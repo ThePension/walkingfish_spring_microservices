@@ -1,7 +1,6 @@
 package ch.walkingfish.walkingfish.model;
 
 import java.io.Serializable;
-import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.Entity;

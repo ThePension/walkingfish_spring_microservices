@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jms.core.JmsTemplate;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,6 +41,11 @@ public class RestArticleController {
     @Autowired
     private FileStorageService fileStorageService;
 
+    /**
+     * Get all articles from the catalogue
+     * @param opt_search an optional search string
+     * @return a list of articles
+     */
     @GetMapping(value = { "/", "" })
     public List<Article> showCatalogue(@RequestParam("search") Optional<String> opt_search) {
         List<Article> articles = null;
@@ -63,6 +67,11 @@ public class RestArticleController {
         return articles;
     }
 
+    /**
+     * Get an article by its id
+     * @param id the id of the article
+     * @return the article
+     */
     @GetMapping("/{id}")
     public Article getArticleById(@PathVariable int id)
     {
@@ -88,6 +97,11 @@ public class RestArticleController {
         return article;
     }
 
+    /**
+     * Delete an article by its id
+     * @param id the id of the article
+     * @return the deleted article
+     */
     @GetMapping("/{id}/pictures")
     public List<Picture> getPicturesFromArticle(@PathVariable int id)
     {
@@ -110,6 +124,11 @@ public class RestArticleController {
         }
     }
 
+    /**
+     * Get all coloris from an article
+     * @param id the id of the article
+     * @return a list of coloris
+     */
     @GetMapping("/{id}/coloris")
     public List<Colori> getColorisFromArticle(@PathVariable int id)
     {
@@ -132,6 +151,11 @@ public class RestArticleController {
         }
     }
 
+    /**
+     * Create an article
+     * @param article the article to create
+     * @return the created article
+     */
     @PostMapping(value = { "/", "" })
     public Article createArticle(@RequestBody Article article)
     {
@@ -154,6 +178,12 @@ public class RestArticleController {
         }
     }
 
+    /**
+     * Update an article
+     * @param id the id of the article
+     * @param article the article to update
+     * @return the updated article
+     */
     @PutMapping(value = { "/{id}", "/{id}/" })
     public Article updateArticle(@PathVariable int id, @RequestBody Article article)
     {
@@ -191,6 +221,10 @@ public class RestArticleController {
         }
     }
 
+    /**
+     * Delete an article by its id
+     * @param id the id of the article
+     */
     @DeleteMapping(value = { "/{id}", "/{id}/" })
     public void deleteArticle(@PathVariable int id)
     {
@@ -210,6 +244,12 @@ public class RestArticleController {
         }
     }
 
+    /**
+     * Upload a picture to an article
+     * @param id the id of the article
+     * @param image the image to upload
+     * @return the updated article
+     */
     @PostMapping(value = {"/{id}/pictures", "/{id}/pictures/"})
     public Picture addPicture(@PathVariable int id, @RequestBody MultipartFile image)
     {

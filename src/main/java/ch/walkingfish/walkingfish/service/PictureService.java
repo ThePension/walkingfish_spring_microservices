@@ -1,15 +1,8 @@
 package ch.walkingfish.walkingfish.service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import ch.walkingfish.walkingfish.model.Article;
 import ch.walkingfish.walkingfish.model.Picture;
-import ch.walkingfish.walkingfish.repository.PictureRepository;
 
 public interface PictureService {
 
@@ -42,5 +35,9 @@ public interface PictureService {
 	 */
 	public void deleteAllPictures();
 
+	/**
+	 * Return all the pictures in the database
+	 * @return the list of pictures
+	 */
     public List<Picture> getAllPictures();
 }

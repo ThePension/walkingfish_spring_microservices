@@ -30,6 +30,10 @@ public class RestPictureController {
     @Autowired
     private ProducerService producerService;
 
+    /**
+     * Get all pictures from the database
+     * @return a list of pictures
+     */
     @GetMapping(value = {"/", ""})
     public List<Picture> getAllPictures()
     {
@@ -40,6 +44,11 @@ public class RestPictureController {
         return pictureService.getAllPictures();
     }
 
+    /**
+     * Get a picture by its id
+     * @param id the id of the picture
+     * @return the picture
+     */
     @GetMapping("/{id}")
     public Picture getPictureByArticleId(@PathVariable int id) {
         try {
@@ -61,6 +70,11 @@ public class RestPictureController {
         }
     }
 
+    /**
+     * Get the article from a picture
+     * @param picture_id the id of the picture
+     * @return the article
+     */
     @GetMapping("/{picture_id}/articles")
     public Article getArticleFromPicture(@PathVariable int picture_id)
     {
@@ -84,6 +98,10 @@ public class RestPictureController {
         }
     }
 
+    /**
+     * Delete a picture by its id
+     * @param id the id of the picture
+     */
     @DeleteMapping("/{id}")
     public void deletePictureById(@PathVariable int id)
     {

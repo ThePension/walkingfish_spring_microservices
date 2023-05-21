@@ -16,6 +16,10 @@ public class ProducerServiceImpl implements ProducerService {
     @Value("${spring.activemq.queue-name}")
     private String queueName;
 
+    /**
+     * Send a message to the queue
+     * @param message the message to send
+     */
     @Override
     public void send(Object message) {
         jmsTemplate.convertAndSend(queueName, message);

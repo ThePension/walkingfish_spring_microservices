@@ -1,17 +1,14 @@
 package ch.walkingfish.walkingfish.model;
 
 import java.util.List;
-import java.util.Objects;
 import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumns;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -20,11 +17,8 @@ import javax.persistence.PreRemove;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
-import org.hibernate.collection.internal.PersistentList;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 @Entity
 public class Article implements Serializable {

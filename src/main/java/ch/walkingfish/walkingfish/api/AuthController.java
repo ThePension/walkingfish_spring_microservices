@@ -7,7 +7,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,9 +23,6 @@ import ch.walkingfish.walkingfish.service.ProducerService;
 public class AuthController { 
   @Autowired
   private AuthenticationManager authenticationManager;
-     
-  @Autowired
-  private PasswordEncoder encoder;
 
   @Autowired
   private JwtUtils jwtUtils;
@@ -34,6 +30,12 @@ public class AuthController {
   @Autowired
   private ProducerService producerService;
 
+  /**
+   * Authenticate a user
+   * @param username the username
+   * @param password the password
+   * @return a JWT token if the authentication is successful
+   */
   @PostMapping("/login")
   public ResponseEntity<?> authenticateUser(String username, String password) {
 

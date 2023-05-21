@@ -17,6 +17,10 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     @Value("${walkingfish.app.password}")
     private String wk_password;
 
+    /**
+     * Authenticate a user
+     * @param authentication the authentication object
+     */
     @Override
     public Authentication authenticate(Authentication authentication) 
       throws AuthenticationException {
@@ -32,6 +36,10 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         return null;
     }
 
+    /**
+     * Check if the authentication object is supported
+     * @param authentication the authentication object
+     */
     @Override
     public boolean supports(Class<?> authentication) {
         return authentication.equals(UsernamePasswordAuthenticationToken.class);
